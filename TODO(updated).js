@@ -9,7 +9,7 @@ import {
   Alert,
   Switch,
   ScrollView,
-} from 'react-native';
+}from 'react-native';
 
 let id = 0;
 
