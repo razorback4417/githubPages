@@ -1,0 +1,71 @@
+#options {
+  text-align: right;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.main {
+  text-align: center;
+  vertical-align: middle;
+}
+#searchBox {
+  width: 482px;
+  border-radius: 24px;
+  padding: 10px;
+  border: 1px solid #dfe1e5;
+}
+#logo {
+  height: 100px;
+  width: 300px;
+}
+#logo1 {
+  height: 152px;
+  width: 450px;
+}
+#searchButton {
+  background-color: #f2f2f2;
+  border: 3px solid #f2f2f2;
+  border-radius: 6px;
+  height: 36px;
+  width: 130px;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+#mag {
+  height: 20px;
+  width: 20px;
+}
+
+a {
+  font-family: arial,sans-serif;
+  color: rgba(0, 0, 0, 0.87);
+  text-decoration: none;
+}
+label {
+  font-size: 13px;
+  font-family: arial,sans-serif;
+}
+
+#adv {
+  border-radius: 1px;
+  border: 1px solid #d9d9d9;
+  border-top: 1px solid #c0c0c0;
+  font-size: 13px;
+  height: 25px;
+  padding: 1px 8px;
+  width: 400px;
+}
+
+#adButton {
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: none;
+  background-color: #4d90fe;
+  color: #fff;
+  border: 1px solid #3079ed;
+  width: 120px;
+  height: 28px;
+  margin-left: 460px;
+}
