@@ -1,0 +1,27 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+Encyclopedia
+{% endblock %}
+
+{% block body %}
+<h2>{{ title }}</h2>
+<div>
+    {{ message }}
+</div>
+
+
+<form action="createR" method="POST">
+    {% csrf_token %}
+    <label for="title">Title: </label>
+    <input type="text" name="marktitle">
+        <br><br>
+        <div>
+            Add your Markdown content here:
+        </div>
+        <textarea name="mrkdwn"></textarea>
+        <br>
+        <button type="submit" name="button">Submit</button>
+</form>
+
+{% endblock %}
