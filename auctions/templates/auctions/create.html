@@ -1,0 +1,57 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<h2>Create Listing</h2>
+
+<div>{{ title }}</div>
+
+<div style="padding-left: 10px; padding-top: 10px; display: flex; flex-direction: row">
+    <div style="padding-right: 50px;">
+        Title*:
+        <br>
+        <div style="padding-top: 10px;">
+            Description*:
+        </div>
+        <br><br><br><br><br><br>
+        <div style="padding-top: 15px;">
+            Starting Bid*:
+        </div>
+        <div style="padding-top: 10px;">
+            Category:
+        </div>
+        <div style="padding-top: 10px;">
+            Image Url:
+        </div>
+        <br><br><br><br>
+    </div>
+    
+    <form action="{% url 'create' %}" method="post">
+        {% csrf_token %}
+        <div>
+            <input type="text" name="title" required>
+                </div>
+        <div style="padding-top: 10px;">
+            <textarea style="height: 160px; width: 125%" name="des" required></textarea>
+        </div>
+        <div style="padding-top: 5px;">
+            <input type="text" name="sBid" required>
+                </div>
+        <div style="padding-top: 5px;">
+            <input type="text" name="cat">
+                </div>
+        <div style="padding-top: 5px;">
+            <input style="width: 400px;" type="text" name="uI">
+                </div>
+        <input type="hidden" name="userstamp" value={{ user.username }}>
+            <br>
+            <input class="btn btn-primary" type="submit" value="Submit">
+                </form>
+</div>
+
+<div style="padding-left: 10px; padding-top: 10px; display: flex; flex-direction: row">
+    * items are required fields
+    <div>
+        
+        
+        {% endblock %}

@@ -1,0 +1,88 @@
+{% extends "auctions/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+<div style="padding-left: 10px">
+    <h1>Listing: {{listing.title}}</h1>
+    {% if message != 'None' %}
+        <h3>{{message}}</h3>
+    {% endif %}
+
+    {% if winner ==  user.username%} <h3> You won the auction! </h3> {% endif %}
+    <form action="/editListing" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="id" value={{listing.id}}>
+        <input type="hidden" name="bidder" value={{user.username}}>
+        <input type="hidden" name="currentBidder" value={{currentBidder}}>
+        <input type="hidden" name="currentBid" value={{currentBid}}>
+        <div>
+            {% if currentWLcount > 0 %}
+                <input type="submit" name="removewatchlist" value="Remove from Watchlist">
+            {% else %}
+                <input type="submit" name="addwatchlist" value="Add to Watchlist">
+            {% endif %}
+            <br><br>
+        </div>
+        
+        <div class="column">
+            {% if listing.image %}
+                <img src={{listing.image}} width="300" height="300"/>
+            {% else %}
+                <img src="{% static "auctions/NoImage.png" %}" width="200" height="200"/>
+            {% endif %}
+        </div>
+        <div class="column">
+            <div style="padding-bottom: 5px">
+                {{listing.description}}
+            </div>
+            {% if listing.active == 'Y' %}
+                <h3>${{currentBid}}</h3>
+                <br>
+                {{numBids}} bid(s) so far. {% if user.username == currentBidder and numBids != 0 %} You have the current bid. {% endif %}
+                <br>
+                {% if user.username != listing.userstamp %}
+                <input style="width: 300px; padding: 3px" type="number" step=".01" name="bid" placeholder="Enter Bid">
+                    <input class="btn btn-primary" type="submit" name="submit" value="Place Bid">
+                {% endif %}
+                {% if user.username == listing.userstamp and numBids > 0 %}
+                    <input class="btn btn-primary" type="submit" name="closebid" value="Close Bid">
+                {% endif %}
+            {% else %}
+                <b> This auction has been closed. </b>
+                <br><br>
+                {% if currentWLcount > 0 %}
+                    <input class="btn btn-primary" type="submit" name="removewatchlist" value="Remove from Watchlist">
+                {% else %}
+                    <input class="btn btn-primary" type="submit" name="addwatchlist" value="Add to Watchlist">
+                {% endif %}
+            {% endif %}
+            <br>
+            <div style="padding-top: 10px">
+                <h5>Details</h5>
+            <div>
+            <ul>
+                <li>Listed By: {{listing.userstamp}}</li>
+                <li>Category: {{listing.category}}</li>
+                <li>Starting Price: ${{listing.price}}</li>
+            </ul>
+            <h5>Comments</h5>
+            <div style="padding: 10px">
+                {% for comment in comments %}
+                
+                        <b> {{comment.userstamp}} </b> on {{comment.createdDate}}
+                        <br>
+                        {{comment.comment}}
+                        <br> <br>
+                {% endfor %}
+            </div>
+            {% if listing.active == 'Y' %}
+            <input style="width: 1000px" type="text" name="entercomment" placeholder="Enter Comment">
+                <input class="btn btn-primary" type="submit" name="addcomment-btn" value="Comment">
+            {% endif %}
+            <br><br><br><br>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

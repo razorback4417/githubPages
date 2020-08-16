@@ -1,0 +1,48 @@
+{% extends "auctions/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+<h2>Active Listings</h2>
+    {% for listing in listings %}
+        <div style=
+            "display: flex;
+            flex-direction: row;
+            padding: 20px;
+            border: 1px solid #b8b4b4;
+        ">
+            {% if listing.image %}
+                <!--<img src={{listing.image}} width="400" height="300"/> -->
+                <img style="
+                    width: auto;
+                    max-width: 300px;
+                    height: auto;
+                    max-height: 300px; "
+                    src={{listing.image}}
+                />
+            {% else %}
+                <!-- <img src="{% static "auctions/NoImage.png" %}" width="400" height="300"/> -->
+                <img src="{% static "auctions/NoImage.png" %}"/>
+            {% endif %}
+            <br>
+            <div style="padding-left: 50px">
+                {% if user.is_authenticated %}
+                    <h3> <a href="http://localhost:8000/listing/{{listing.id}}">{{ listing.title }}</a> </h3>
+                {% else %}
+                    <h3> {{ listing.title }} </h3>
+                {% endif %}
+
+                {% if listing.active == 'Y' %}
+                    <h5> Price: ${{listing.price}} </h5>
+                {% else %}
+                    <b> This action has been closed. </b>
+                    <br>
+                {% endif %}
+                
+                {{listing.description}}
+                <br><br>
+                <div style="color: #bdbdbd; font-size: 12px"> Created {{ listing.createdDate }} </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
