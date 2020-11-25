@@ -1,0 +1,90 @@
+{% extends "network/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+    <div style = "padding-left: 10px;">
+        <h3> {{pageTitle}} </h3>
+        <b>Username: </b> {{userProfile}} <br/>
+        <b>Followers: </b> {{followers}} <br/>
+        <b>Following: </b> {{following}} <br/>
+
+        {% if user.username != userProfile %}
+            {% if currentFollower > 0 %}
+                <form action="{% url 'profile' userProfile=userProfile %}" method="post">
+                    {% csrf_token %}
+                    <input class="btn btn-sm btn-outline-primary" value = "Unfollow" type="submit">
+                </form>
+            {% else %}
+                <form action="{% url 'profile' userProfile=userProfile %}" method="post">
+                    {% csrf_token %}
+                    <input class="btn btn-sm btn-outline-primary" value = "Follow" type="submit">
+                </form>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div style="padding-top: 10px">
+        {% for post in posts %}
+        <div style="padding-bottom: 4px">
+        <div style="border: solid 1px #cccccc; border-radius: 5px; padding: 15px; width: 80%">
+            <div style="display: flex; flex-direction: row; width: auto">
+                <h5> {{post.userstamp}} </h5>
+                <div style="margin-left: auto">
+                    More Options Here
+                </div>
+            </div>
+            
+            <div style="color: #cccccc">
+                On {{post.timestamp}} {{post.userstamp}} wrote:
+            </div>
+            <div id="entry{{ post.id }}">{{post.content}}</div>
+            {% if user.username != post.userstamp %}
+                {% if user.is_authenticated %}
+                    <form>
+                        {% csrf_token %}
+                        <button type="button" id="likeBtn{{ post.id }}" onclick="toggle_like('{{ post.id }}')"
+                            value="{{ post.user_like }}" class="hbtn">
+                {% endif %}
+                
+                {% if post.user_like == "Unlike" or post.like > 0 and not user.is_authenticated %}
+                    <br/>
+                    <span class="fa fa-heart red" id="heart{{ post.id }}" aria-hidden="true"></span>
+                {% else %}
+                    <br/>
+                    <span class="fa fa-heart-o" id="heart{{ post.id }}" aria-hidden="true"></span>
+                {% endif %}
+                <span id="likeCount{{ post.id }}">{{ post.like }}</span>
+                {% if user.is_authenticated %}
+                        </button>
+                    </form>
+                {% endif %}
+            {% else %}
+                <div>
+                    <br/>
+                    Number of Likes: {{ post.like }}
+                    <br/>
+                    <div id="editTextArea{{ post.id }}">
+                    </div>
+                    <form>
+                        <br/>
+                        <button type="button" id="editBtn{{ post.id }}" onclick="edit_post('{{ post.id }}')"
+                            class="btn btn-sm btn-outline-primary">
+                            Edit
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+        </div>
+        {% endfor %}
+        
+        {% block script %}
+        {% csrf_token %}
+        <script type="text/javascript"> var cur_username = "{{user.username}}" </script>
+        <script src="{% static 'network/network.js' %}"></script>
+        {% endblock %}
+    </div>
+
+{% endblock %}
+
