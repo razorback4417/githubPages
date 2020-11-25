@@ -1,0 +1,113 @@
+{% extends "network/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+    <div style = "padding-left: 10px;">
+        <h3> {{pageTitle}} </h3>
+        <div style="border: solid 1px #cccccc; border-radius: 5px; padding: 15px; width: 80%">
+            <h5> New Post </h3>
+            <form action="{% url 'index' %}" method="POST">
+                {% csrf_token %}
+                <textarea
+                    style="height: 100px; width: 80%"
+                    class="form-control" name="content" placeholder="Write your post here:"
+                    ></textarea>
+                <div>
+                    <input type="hidden" name="userStamp" value={{user.username}}
+                </div>
+                <div style = "padding-top: 5px; padding-bottom: 5px">
+                    <input type="submit" class="btn btn-sm btn-outline-primary" value="Post"/>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div style="padding-top: 10px">
+        {% for post in posts %}
+        <div style="padding-bottom: 4px">
+        <div style="border: solid 1px #cccccc; border-radius: 5px; padding: 15px; width: 80%">
+            <div style="display: flex; flex-direction: row; width: auto">
+                <a href="{% url 'profile' userProfile=post.userstamp %}"> <h5> {{post.userstamp}} </h5> </a>
+            </div>
+            
+            <div style="color: #cccccc">
+                On {{post.timestamp}} {{post.userstamp}} wrote:
+            </div>
+            <div id="entry{{ post.id }}">{{post.content}}</div>
+            {% if user.username != post.userstamp %}
+                {% if user.is_authenticated %}
+                    <form>
+                        {% csrf_token %}
+                        <button type="button" id="likeBtn{{ post.id }}" onclick="toggle_like('{{ post.id }}')"
+                            value="{{ post.user_like }}" class="hbtn">
+                {% endif %}
+                    
+                {% if post.user_like == "Unlike" or post.like > 0 and not user.is_authenticated %}
+                    <br/>
+                    <span class="fa fa-heart red" id="heart{{ post.id }}" aria-hidden="true"></span>
+                {% else %}
+                    <br/>
+                    <span class="fa fa-heart-o" id="heart{{ post.id }}" aria-hidden="true"></span>
+                {% endif %}
+                <span id="likeCount{{ post.id }}">{{ post.like }}</span>
+                {% if user.is_authenticated %}
+                        </button>
+                    </form>
+                {% endif %}
+            {% else %}
+                <div>
+                    <br/>
+                    Number of Likes: {{ post.like }}
+                    <br/>
+                    <div id="editTextArea{{ post.id }}">
+                    </div>
+                    <form>
+                        <br/>
+                        <button type="button" id="editBtn{{ post.id }}" onclick="edit_post('{{ post.id }}')"
+                            class="btn btn-sm btn-outline-primary">
+                            Edit
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+        </div>
+        {% endfor %}
+        
+        {% block script %}
+        {% csrf_token %}
+        <script type="text/javascript"> var cur_username = "{{user.username}}" </script>
+        <script src="{% static 'network/network.js' %}"></script>
+        {% endblock %}
+        
+    </div>
+
+    <div>
+        <ul class="pagination justify-content-center">
+            {% if posts.has_previous %}
+                <li class="page-item"><a href="?page=1" class="page-link">&laquo; First</a></li>
+                <li class="page-item"><a href="?page={{ posts.previous_page_number }}" class="page-link">Previous</a></li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link">&laquo; First</a></li>
+                <li class="page-item disabled"><a class="page-link">Previous</a></li>
+            {% endif %}
+            
+            {% if posts.number %}
+                <li class="page-item"><a class="page-link">{{ posts.number }}</a></li>
+            {% else %}
+                <li class="page-item"><a class="page-link">0</a></li>
+            {% endif %}
+            
+            {% if posts.has_next %}
+                <li class="page-item"><a href="?page={{ posts.next_page_number }}" class="page-link">Next</a></li>
+                <li class="page-item"><a href="?page={{ posts.paginator.num_pages }}" class="page-link">Last &raquo;</a></li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link">Next</a></li>
+                <li class="page-item disabled"><a class="page-link">Last &raquo;</a></li>
+            {% endif %}
+            
+        </ul>
+    </div>
+
+{% endblock %}
