@@ -1,0 +1,33 @@
+{% extends "hsConnect/layout.html" %}
+
+{% block body %}
+
+    <h2>{{ title }}</h2>
+    {% if message %}
+        <div> {{ message }} </div>
+    {% endif %}
+
+    {% if requests %}
+        {% for req in requests %}
+            {% if req.status == 'Requested' and user.username == 'admin1' %}
+                <form action={% url 'editrequest' %} method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="requestid" value={{req.id}}>
+                    <input type="hidden" name="username" value={{user.username}}>
+                    <div class="column">
+                        {% if req.type == 'Become a Tutor' %}
+                            {{req.role}} {{req.reqestor}} is requesting to become a tutor or grade(s) {{req.grades}} in {{req.subject}} <br>
+                        {% endif %}
+                    </div>
+                    <input id="approve-item-${req.id}" type="submit" name="approvereq-btn" value="Approve">
+                    <input id="reject-item-${req.id}" type="submit" name="rejectreq-btn" value="Reject">
+                </form>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <div>
+            Sorry, there are no requests.
+        </div>
+    {% endif %}
+
+{% endblock %}
