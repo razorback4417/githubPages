@@ -1,0 +1,80 @@
+{% extends "hsConnect/layout.html" %}
+
+{% block body %}
+
+    <h2>Become a Tutor</h2>
+
+    {% if message %}
+        <div> {{ message }} </div>
+    {% endif %}
+
+<div style="padding-left: 10px; padding-top: 10px; display: flex; flex-direction: row">
+    <div style="padding-right: 50px;">
+        <div>
+            Photo URL:
+        </div>
+        <br>
+        <div style="padding-top: 10px;">
+            About*:
+        </div>
+        <br><br><br><br><br><br><br><br>
+        <div style="padding-top: 15px;">
+            Subject(s)*:
+        </div>
+        <br><br><br>
+        <div style="padding-top: 10px;">
+            Availability*:
+        </div>
+        <div style="padding-top: 10px;">
+            Grade(s)*:
+        </div>
+        <br><br><br><br>
+    </div>
+    
+    <form action="{% url 'becomeTutor' %}" method="POST">
+        {% csrf_token %}
+        <div>
+            <input style="width: 125%" type="text" name="photo">
+        </div>
+        <br>
+        <div style="padding-top: 10px;">
+            <textarea style="height: 160px; width: 125%" name="about" required></textarea>
+        </div>
+        <div style="padding-top: 5px;">
+            <label for="subjects"> Select one or more subjects:</label>
+            <select id="subjects" name="subjects" multiple>
+                {% for sub in allsubjects %}
+                    <option value = "{{sub.subject}}"> {{sub.subject}} </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div style="padding-top: 5px;">
+            <input style="width: 125%" type="text" name="availability">
+        </div>
+        <div style="padding-top: 5px;">
+            <select id="subjects" name="grades" multiple>
+                <option value = "K"> K </option>
+                <option value = "1"> 1 </option>
+                <option value = "2"> 2 </option>
+                <option value = "3"> 3 </option>
+                <option value = "4"> 4 </option>
+                <option value = "5"> 5 </option>
+                <option value = "6"> 6 </option>
+            </select>
+        </div>
+        
+        <div>
+            <input type="hidden" name="userstamp" value={{user.username}}>
+        </div>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+<div style="padding-left: 10px; padding-top: 10px; display: flex; flex-direction: row">
+    * items are required fields
+</div>
+
+{% endblock %}
+
+

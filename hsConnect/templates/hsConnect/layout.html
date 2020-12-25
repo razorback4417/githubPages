@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>HS Connect</title>
+    </head>
+    <body>
+        <center>
+            <h1> <a style="text-decoration: none; color: black" href="{% url 'home' %}"> HS Connect </a> </h1>
+            {% if user.is_authenticated %}
+                <div>
+                    Signed in as <strong>{{ user.username }}</strong>.
+                </div>
+                </br>
+                <div style="display: flex; justify-content: center; margin-bottom: 15px">
+                    <div style="width: 20%; border: solid; border-width: 1px; border-radius: 5px; background-color: #bababa">
+                        <a style="text-decoration: none; color: black" href="{% url 'becomeTutor' %}">Become a Tutor</a>
+                    </div>
+                    <div style="width: 20%; border: solid; border-width: 1px; border-radius: 5px; background-color: #bababa">
+                        <a style="text-decoration: none; color: black" href="{% url 'findTutor' %}">Find Tutor</a>
+                    </div>
+                    {% if user.username == 'admin1' %}
+                        <div style="width: 20%; border: solid; border-width: 1px; border-radius: 5px; background-color: #bababa">
+                            <a style="text-decoration: none; color: black" href="{% url 'requests' %}">Requests</a>
+                        </div>
+                    {% endif %}
+                    <div style="width: 20%; border: solid; border-width: 1px; border-radius: 5px; background-color: #bababa">
+                        <a style="text-decoration: none; color: black" href="{% url 'logout' %}">Logout</a>
+                    </div>
+                <div/>
+            {% else %}
+                <div>
+                    Not signed in.
+                </div>
+                </br>
+                <div style="display: flex; justify-content: center; margin-bottom: 15px">
+                    <div style="width: 20%; border: solid; border-width: 1px; border-radius: 5px; background-color: #bababa">
+                        <a style="text-decoration: none; color: black" href="{% url 'login' %}">Login</a>
+                    </div>
+                </div>
+            {% endif %}
+        </center>
+        <hr/>
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>
+
