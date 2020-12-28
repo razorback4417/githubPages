@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'paypal.standard.ipn',
 ]
 
 MIDDLEWARE = [
@@ -108,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EST'
 
 USE_I18N = True
 
@@ -130,3 +131,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'razorback4417.800@gmail.com'
 EMAIL_HOST_PASSWORD = 'lemonjuice18%'
 
+PAYPAL_RECEIVER_EMAIL = 'sb-ask3n4380252@business.example.com'
+
+PAYPAL_TEST = True

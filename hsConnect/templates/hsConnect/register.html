@@ -2,35 +2,35 @@
 
 {% block body %}
 
-    <h2>Register</h2>
+<h2>Register</h2>
 
-    {% if message %}
-        <div>{{ message }}</div>
-    {% endif %}
+{% if message %}
+    <div>{{ message }}</div>
+{% endif %}
 
-    <form action="{% url 'register' %}" method="post">
-        {% csrf_token %}
-        <div>
-            <input type="text" name="username" placeholder="Username">
-        </div>
-        <div>
-            <input type="text" name="firstname" placeholder="First Name">
-        </div>
-        <div>
-            <input type="text" name="lastname" placeholder="Last Name">
-        </div>
-        <div>
-            <input type="email" name="email" placeholder="Email Address">
-        </div>
-        <div>
-            <input type="password" name="password" placeholder="Password">
-        </div>
-        <div>
-            <input type="password" name="confirmation" placeholder="Confirm Password">
-        </div>
-        <input type="submit" value="Register">
-    </form>
-
-    Have an account already? <a href="{% url 'login' %}">Log In here.</a>
+<form action="{% url 'register' %}" method="post">
+    {% csrf_token %}
+    <div>
+        <input type="text" name="username" placeholder="Username">
+            </div>
+    <div>
+        <input type="text" name="firstname" placeholder="First Name">
+            </div>
+    <div>
+        <input type="text" name="lastname" placeholder="Last Name">
+            </div>
+    <div>
+        <input type="email" name="email" placeholder="Email Address">
+            </div>
+    <div>
+        <input type="password" name="password" placeholder="Password">
+            </div>
+    <div>
+        <input type="password" name="confirmation" placeholder="Confirm Password">
+            </div>
+    <br>
+    <input class="btn btn-outline-dark" type="submit" value="Register">
+        </form>
+Have an account already? <a href="{% url 'login' %}">Log In here.</a>
 
 {% endblock %}
