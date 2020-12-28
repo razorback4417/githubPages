@@ -1,0 +1,57 @@
+{% extends "hsConnect/layout.html" %}
+
+{% block body %}
+<div class="lead">
+    <h4>{{ title }}</h4>
+    {% if message %}
+    <div> {{ message }} </div>
+    {% endif %}
+    
+    {% if requests %}
+    {% for req in requests %}
+    {% if req.status == 'Requested' and user.username == 'admin1' %}
+    <form action={% url 'editrequest' %} method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="requestid" value={{req.id}}>
+            <input type="hidden" name="username" value={{user.username}}>
+                <div class="column">
+                    {% if req.type == 'Become a Tutor' %}
+                    {{ req.requestor }} is requesting to become a tutor or grade(s) {{req.grade}} in {{req.subject}} <br>
+                    {% endif %}
+                    {% if req.type == 'Find a Tutor' %}
+                    {{req.requestor}} is requesting to be taught in {{req.subject}} by {{req.tutorname}}<br>
+                    {% endif %}
+                    <strong> Description </strong> {{req.description}} <br>
+                    <strong> Subject </strong> {{req.subject}} <br>
+                    <strong> Status: </strong> {{req.status}} <br>
+                    <strong> Type: </strong> {{req.type}} <br>
+                    <strong> Availability: </strong> {{req.availability}} <br>
+                    <strong> Created Date: </strong> {{req.createdDate}}
+                </div>
+                <input id="approve-item-${req.id}" type="submit" name="approvereq-btn" value="Approve">
+                <input id="reject-item-${req.id}" type="submit" name="rejectreq-btn" value="Reject">
+    </form>
+    <br>
+    {% else %}
+    {% if req.type == 'Become a Tutor' %}
+    {{req.requestor}} is requesting to become a tutor or grade(s) {{req.grade}} in {{req.subject}} <br>
+    {% endif %}
+    {% if req.type == 'Find a Tutor' %}
+    {{req.requestor}} is requesting to be taught in {{req.subject}} by {{req.tutorname}}<br>
+    {% endif %}
+    <strong> Description: </strong> {{req.description}} <br>
+    <strong> Subject: </strong> {{req.subject}} <br>
+    <strong> Status: </strong> {{req.status}} <br>
+    <strong> Type: </strong> {{req.type}} <br>
+    <strong> Requestor's Email: </strong> {{req.req_email}} <br>
+    <strong> Created Date: </strong> {{req.createdDate}}
+    <br><br>
+    {% endif %}
+    {% endfor %}
+    {% else %}
+    <div>
+        There are no requests.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
