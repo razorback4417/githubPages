@@ -16,7 +16,7 @@ function load_request(type) {
   if (type == 'myRequests') {
     document.querySelector('#requestView').style.display = 'block';
     document.querySelector('#content').style.display = 'none';
-    document.querySelector('#requestView').innerHTML = `<h4>My Requests From JS</h4>`;
+    document.querySelector('#requestView').innerHTML = `<h4>My Requests</h4>`;
     console.log("done")
     //var role = "student"
       
@@ -88,7 +88,7 @@ function load_request(type) {
   if (type == 'requests') {
     document.querySelector('#requestViewAdmin').style.display = 'block';
     document.querySelector('#content').style.display = 'none';
-    document.querySelector('#requestViewAdmin').innerHTML = `<h4>Requests Testing</h4>`;
+    document.querySelector('#requestViewAdmin').innerHTML = `<h4>Requests</h4>`;
       
     fetch(`/requests`)
       .then(response => response.json())
@@ -137,14 +137,15 @@ function load_request(type) {
                 cd = cd.substring(1, cd.length-1)
             
                 item.innerHTML = `<div class="lead">
-                    ${type} ${JSON.stringify(data[i].pk)}<br>
+                    <br>
+                    ${type}<br>
                     <strong> Description: </strong> ${description} <br>
                     <strong> Subject: </strong> ${subject} <br>
                     <strong> Status: </strong> ${status} <br>
                     <strong> Type: </strong> ${typeOne} <br>
                     <strong> Requestor's Email: </strong> ${email} <br>
                     <strong> Created Date: </strong> ${cd}
-                    <br><br>
+                    <br>
                 </div>`;
             
                 document.querySelector("#requestViewAdmin").appendChild(item);
@@ -155,14 +156,24 @@ function load_request(type) {
                     var j = i
                     //console.log(j)
                     let approveButton = document.createElement("btn");
-                    approveButton.innerText = `Approve ${data[i].pk}`
+                    approveButton.innerText = `Approve`
                     //INSERT CLASS NAME FOR SYTLING HERE--> approveButton.className = ``;
+                    approveButton.className = `btn btn-outline-dark`;
                     approveButton.addEventListener("click", () => {
                         processRequest(data[j].pk, 'Approved');
                     });
                     //console.log(approveButton)
                     //console.log("HERE")
+                    let rejectButton = document.createElement("btn");
+                    rejectButton.innerText = `Reject`
+                    //INSERT CLASS NAME FOR SYTLING HERE--> approveButton.className = ``;
+                    rejectButton.className = `btn btn-outline-dark`;
+                    rejectButton.addEventListener("click", () => {
+                        processRequest(data[j].pk, 'Rejected');
+                    });
                     document.querySelector("#requestViewAdmin").appendChild(approveButton);
+                    document.querySelector("#requestViewAdmin").appendChild(rejectButton);
+            
                 }
             
             }
@@ -181,5 +192,6 @@ function processRequest(id, status) {
             decision: status,
         }),
     });
+        
     load_request('requests');
 }

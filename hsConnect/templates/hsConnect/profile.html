@@ -1,0 +1,22 @@
+{% extends "hsConnect/layout.html" %}
+
+{% block body %}
+<div class="lead">
+    <h4> Profile for {{user}}</h4>
+    
+    <strong> First Name: </strong> {{user.first_name}} <br>
+    <strong> Last Name: </strong> {{user.last_name}} <br>
+    <strong> Email: </strong> {{user.email}} <br>
+    <div style="color: #bdbdbd; font-size: 15px">
+        Joined {{user.date_joined}} <br><br>
+    </div>
+    
+    <a style="color: black" href="{% url 'changepassword' %}">
+        Change Password
+    </a>
+    
+</div>
+
+
+
+{% endblock %}
