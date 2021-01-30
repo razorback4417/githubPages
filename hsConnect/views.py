@@ -40,6 +40,9 @@ companies = json_serializer.serialize(Request.objects.all(), ensure_ascii=False)
 def index(request):
     return render(request, "hsConnect/layout.html")
 
+def ourPartners(request):
+    return render(request, "hsConnect/ourPartners.html")
+
 def home(request):
     return render(request, "hsConnect/home.html")
 
@@ -326,7 +329,7 @@ def becomeTutor(request):
         recipient_list.append(req_email)
         recipient_list.append(admin_email)
         subject = 'Thank you'
-        message = 'Thanks for applying'
+        message = 'Thank you for applying as a ' + subjects + ' tutor.'
         email_from = settings.EMAIL_HOST_USER
         send_mail(subject, message, email_from, recipient_list)
     

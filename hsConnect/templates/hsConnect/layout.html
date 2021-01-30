@@ -22,33 +22,28 @@
                 <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{% url 'becomeTutor' %}">Become a Tutor</a>
+                            <a class="nav-link" href="{% url 'findTutor' %}">Our Tutors</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'findTutor' %}">Find Tutor</a>
+                            <a class="nav-link" aria-current="page" href="{% url 'becomeTutor' %}">Become a Tutor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'myprofile' %}">Profile</a>
+                            <a class="nav-link" aria-current="page" href="{% url 'ourPartners' %}">Our Partners</a>
                         </li>
                         {% if user.username == 'admin1' %}
                         <li class="nav-item">
                             <button id="requests" style="margin-top: 1px" class="btn .btn-link text-secondary">Requests</a>
                         </li>
-                        {% else %}
-                        <li class="nav-item">
-                            <button id="myRequests" style="margin-top: 1px" class="btn .btn-link text-secondary"> My Requests</button>
-                        </li>
                         {% endif %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'service' %}">Services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                        </li>
                     </ul>
-                    <span class="navbar-text">
-                        Signed in as <strong>{{ user.username }}</strong>.
-                    </span>
+                    <div>
+                        <div>
+                            <span class="navbar-text">
+                                <a class="nav-link" href="{% url 'myprofile' %}">Signed in as <strong>{{ user.username }}</strong>.</a>
+                            </span>
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </div>
+                    </div>
                 </div>
                 {% else %}
                 <div class="collapse navbar-collapse" id="navbarText">
@@ -79,7 +74,7 @@
         <div class="fixed-bottom">
             <footer class="footer mt-auto py-3 bg-light">
                 <div class="container">
-                    <span class="text-muted">© 2020</span>
+                    <span class="text-muted">© 2021 | Django site developed with Python, JavaScript and HTML</span>
                 </div>
             </footer>
         </div>
