@@ -1,0 +1,28 @@
+{% extends "hsConnect/layout.html" %}
+
+{% block body %}
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <div class="form-signin">
+        <h2 class="h3 mb-3 fw-normal">Please sign in</h2>
+
+        {% if message %}
+            <div>{{ message }}</div>
+        {% endif %}
+
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input style="width:300px; height: 46px" type="text" name="username" placeholder="Username">
+            </div>
+            <div>
+                <input style="width:300px; height: 46px" type="password" name="password" placeholder="Password">
+            </div>
+            <br>
+            <input class="btn btn-outline-dark" type="submit" value="Sign in">
+        </form>
+        <br>
+        Don't have an account? <a href="{% url 'register' %}"> Register here.</a>
+    </div>
+</div>
+{% endblock %}
+
