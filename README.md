@@ -1,4 +1,4 @@
-#Final Project - HS Connect #
+# Final Project - HS Connect #
 For my final project, I designed and implemented a tutoring website. It allows users to register an account as a tutor or student. As a tutor, one can submit a request to an admin account, providing info such as experience, subject, avaliability, grades they want to teach, etc. The admin has the option to accept or reject the user's request to become a tutor. Students can Find Tutors by subject, and send a request to be taught by a tutor.
 
 This project combines knowledge accumalted from past projects, and extends upon them.
@@ -8,7 +8,7 @@ I implemented a Services section that allows user to pay for services (e.g. 1 ho
 Adding on to past account management, I added a Change Password feature (using a form from django.contrib.auth.forms)
 I utilized Bootstrap to create a clean and userfriendly UI.
 
-#Main files#
+# Main files #
 models.py- User, Tutor, TutorSubject, Request, Product, CartItem, Order and LineItem
 
 cart.py- contains functions that only deal with the Services (buying a service) section of the website. forms.py- functions for checkout
